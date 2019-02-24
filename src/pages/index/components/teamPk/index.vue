@@ -44,30 +44,40 @@
           </el-tab-pane>
           <el-tab-pane label="历史战绩"
                        style="">
-            <el-row :span=8>
+            <!-- <el-row :span=8>
               <el-col :span=24>
-                <div class="Tinfo">房间看了电视剧开发的</div>
+                <div class="Tinfo"></div>
               </el-col>
             </el-row>
             <el-row :span=8>
               <el-col :span=24>
-                <div class="Tinfo">房间看了电视剧开发的</div>
+                <div class="Tinfo"></div>
               </el-col>
-            </el-row>
-            <el-row :span=8>
+            </el-row> -->
+            <el-row>
               <el-col :span=24>
                 <div class="Tinfo">
                   <el-popover placement="top"
-                              trigger="hover"
+                              trigger="click"
                               v-model="show">
-                    <radar :id="'Achart'" :team="team"  :ave="ave"></radar>
-                    <el-button slot="reference">查看</el-button>
+                    <radar :id="'Achart'"
+                           :team="team"
+                           :ave="ave"></radar>
+                    <span slot="reference"
+                          class="refto">
+                          在最近5场比赛中获胜4场,超越同类型80%战队,
+                      <span style="text-decoration: underline">
+                        点击查看全面分析
+                      </span>
+                    </span>
                   </el-popover>
                 </div>
               </el-col>
             </el-row>
           </el-tab-pane>
-          <el-tab-pane label="评论留言"></el-tab-pane>
+          <el-tab-pane label="评论留言" class="comdiv">
+             <comment :comments="commentData"></comment>
+          </el-tab-pane>
         </el-tabs>
       </section>
       <section class="teamB">
@@ -80,48 +90,74 @@
 <script>
 import teammate from './components/teammate.vue'
 import radar from './components/radar.vue'
+ import comment from './components/comment.vue'
+ import { FindComment } from '@/api/sys/teampk'
 export default {
   components: {
     teamer: teammate,
-    radar: radar
+    radar: radar,
+      comment:comment
   },
   data() {
-   
     return {
-      team:[80,20,0.8,2000],
-      ave:[50,19,0.5,600],
-      show:false,
+      team: [85,21,0.8,2000],
+      ave: [50, 19, 0.5, 600],
+      show: false,
       teamerList: [
         { color: 'dsfd', class: 'red' }, //todu:只能使用英文作为昵称
         { color: 'blue', class: 'blue' }
-      ]
-    } 
-  },
-  mounted(){
-  },
-    watch: {
- 
-    },
-    methods:{
-    //   draw(){
-    //     let Achart=document.getElementById("Achart")
-    //     this.Achart.setOption({
-    //     series: [{
-    //         // 根据名字对应到相应的系列
-    //         name: '此战队',
-    //         data: team
-    //     },
-    //     {
-    //         name: '同类型均值',
-    //         data: ave
-    //     }
-    //     ]
-    // })
-    //   }
+      ],
+      commentData: []
     }
+  },
+  mounted() {
+    this.test()
+  },
+  watch: {
+
+  },
+  methods: {
+    test() {
+      FindComment({})
+        .then(async res => {
+          this.commentData = res.comment
+        })
+        .catch(err => {
+          console.log('err: ', err)
+        })
+    }
+  }
 }
 </script>
 <style >
+.comdiv{
+  height:145px;
+  overflow-y:scroll;
+  background:white;
+  margin:-15px;
+}
+.comdiv::scroll-bar{
+    width: 5px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.comdiv::-ms-scrollbar{
+    width: 5px;     /*高宽分别对应横竖滚动条的尺寸*/
+    height: 1px;
+}
+.comdiv::-webkit-scrollbar {/*滚动条整体样式*/
+        width: 5px;     /*高宽分别对应横竖滚动条的尺寸*/
+        height: 1px;
+    }
+.comdiv::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
+        border-radius: 5px;
+         -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        background: #535353;
+    }
+.comdiv::-webkit-scrollbar-track {/*滚动条里面轨道*/
+        -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+        border-radius: 10px;
+        background: #EDEDED;
+    }
 .Tinfo {
   padding: 5px;
   background: #12c2e9;
@@ -216,6 +252,9 @@ section {
   -moz-transform: skew(-3deg);
   -o-transform: skew(-3deg);
   -ms-transform: skew(-3deg);
+}
+.refto {
+  cursor: pointer;
 }
 </style>
 

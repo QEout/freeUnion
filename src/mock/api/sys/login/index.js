@@ -15,7 +15,7 @@ const userDB = [
   }
 ]
 
-Mock.mock('/api/login', 'post', ({ body }) => {// 原句({ url, type, body })
+Mock.mock('/api/login', 'post', ({ body }) => { // 原句({ url, type, body })
   const bodyObj = JSON.parse(body)
   const user = userDB.find(e => e.username === bodyObj.username && e.password === bodyObj.password)
   if (user) {

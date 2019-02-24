@@ -28,7 +28,7 @@ const jobDB = [
     value: '80'
   }
 ]
-Mock.mock('/api/getJob', 'post', ({ url, type, body }) => {
+Mock.mock('/api/getJob', 'get', ({ url, type, body }) => {
   return {
     job: jobDB
   }

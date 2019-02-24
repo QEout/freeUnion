@@ -73,6 +73,6 @@ p .cost {
   font-size: 0.7rem;
   text-align: center;
   color: #999;
-  padding: 5px;
+
 }
 </style>

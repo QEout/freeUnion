@@ -1,8 +1,8 @@
 import request from '@/plugin/axios'
 
-export function FindJob (data) {
+export function FindComment (data) {
   return request({
-    url: '/getJob',
+    url: '/getComment',
     method: 'get',
     data
   })
