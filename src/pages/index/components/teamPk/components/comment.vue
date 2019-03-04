@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div class="comment"
-         v-for="item in comments" :key="item">
+         v-for="item in comments" :key="item.index">
       <div class="info">
         <img class="avatar"
              :src="item.fromAvatar"
@@ -28,7 +28,7 @@
       </div>
       <div class="reply">
         <div class="item"
-             v-for="reply in item.reply" :key="reply">
+             v-for="reply in item.reply" :key="reply.index">
           <div class="reply-content">
             <span class="from-name">{{reply.fromName}}</span><span>: </span>
             <span class="to-name">@{{reply.toName}}</span>
@@ -135,9 +135,9 @@ export default {
           toAvatar:
             'http://ww4.sinaimg.cn/bmiddle/006DLFVFgy1ft0j2pddjuj30v90uvagf.jpg', // 被评论者头像
           content: this.inputComment, // 评论内容
-          date: this.time// 评论时间
+          date: this.time // 评论时间
         })
-      }else{
+      } else {
         this.comments.push({
           id: '34523244545', // 主键id
           commentId: 'comment0001', // 父评论id，即父亲的id
@@ -150,10 +150,10 @@ export default {
           toAvatar:
             'http://ww4.sinaimg.cn/bmiddle/006DLFVFgy1ft0j2pddjuj30v90uvagf.jpg', // 被评论者头像
           content: this.inputComment, // 评论内容
-          date:  this.time // 评论时间
+          date: this.time // 评论时间
         })
       }
-       this.showItemId = ''
+      this.showItemId = ''
     },
 
     /**

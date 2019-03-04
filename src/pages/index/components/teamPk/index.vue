@@ -44,22 +44,12 @@
           </el-tab-pane>
           <el-tab-pane label="历史战绩"
                        style="">
-            <!-- <el-row :span=8>
-              <el-col :span=24>
-                <div class="Tinfo"></div>
-              </el-col>
-            </el-row>
-            <el-row :span=8>
-              <el-col :span=24>
-                <div class="Tinfo"></div>
-              </el-col>
-            </el-row> -->
             <el-row>
               <el-col :span=24>
                 <div class="Tinfo">
                   <el-popover placement="top"
                               trigger="click"
-                              v-model="show">
+                              v-model="showA">
                     <radar :id="'Achart'"
                            :team="team"
                            :ave="ave"></radar>
@@ -81,7 +71,57 @@
         </el-tabs>
       </section>
       <section class="teamB">
-
+          <el-tabs type="border-card"
+                 class="tabB">
+          <el-tab-pane label="出场队员">
+            <div style="display:flex;">
+              <el-card class="TMcard parallelogram"
+                       :body-style="{ padding: '0px' }">
+                <img :src="`${$baseUrl}image/demo/demo.jpg`"
+                     class="Timage">
+                <div class="TMbot">
+                  <span>好吃的汉堡好吃的</span>
+                  <span class="Amate">队长</span>
+                </div>
+              </el-card>
+              <el-card class="TMcard parallelogram"
+                       :body-style="{ padding: '0px' }">
+                <img :src="`${$baseUrl}image/demo/demo.jpg`"
+                     class="Timage">
+                <div class="TMbot">
+                  <span>好吃的汉堡好吃的</span>
+                  <span class="Amate">打野</span>
+                </div>
+              </el-card>
+            </div>
+          </el-tab-pane>
+          <el-tab-pane label="历史战绩"
+                       style="">
+            <el-row>
+              <el-col :span=24>
+                <div class="Tinfo">
+                  <el-popover placement="top"
+                              trigger="click"
+                              v-model="showB">
+                    <radar :id="'Bchart'"
+                           :team="team"
+                           :ave="ave"></radar>
+                    <span slot="reference"
+                          class="refto">
+                          在最近5场比赛中获胜4场,超越同类型80%战队,
+                      <span style="text-decoration: underline">
+                        点击查看全面分析
+                      </span>
+                    </span>
+                  </el-popover>
+                </div>
+              </el-col>
+            </el-row>
+          </el-tab-pane>
+          <el-tab-pane label="评论留言" class="comdiv">
+             <comment :comments="commentData"></comment>
+          </el-tab-pane>
+        </el-tabs>
       </section>
     </el-col>
 
@@ -102,7 +142,8 @@ export default {
     return {
       team: [85,21,0.8,2000],
       ave: [50, 19, 0.5, 600],
-      show: false,
+      showA: false,
+      showB: false,
       teamerList: [
         { color: 'dsfd', class: 'red' }, //todu:只能使用英文作为昵称
         { color: 'blue', class: 'blue' }
@@ -151,10 +192,12 @@ export default {
 .comdiv::-webkit-scrollbar-thumb {/*滚动条里面小方块*/
         border-radius: 5px;
          -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+         box-shadow:  inset 0 0 5px rgba(0,0,0,0.2);
         background: #535353;
     }
 .comdiv::-webkit-scrollbar-track {/*滚动条里面轨道*/
         -webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
+          box-shadow: inset 0 0 5px rgba(0,0,0,0.2);
         border-radius: 10px;
         background: #EDEDED;
     }
@@ -173,7 +216,11 @@ export default {
   height: 100%;
   border: 0px;
 }
-
+.tabB {
+  background: #d41819;
+  height: 100%;
+  border: 0px;
+}
 .title {
   background: #e5e9f2;
 }
@@ -242,8 +289,6 @@ section {
   padding: 1px;
   border: 2px solid;
   border-radius: 5px;
-}
-.Bmate {
 }
 /* 平行四边形 */
 .parallelogram {
